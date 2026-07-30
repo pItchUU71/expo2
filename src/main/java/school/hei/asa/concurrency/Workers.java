@@ -10,43 +10,38 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-import java.util.function.Function;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 import school.hei.asa.PojaGenerated;
 
 @PojaGenerated
 @Component
-public class Workers<T> implements Function<List<Callable<T>>, List<T>> {
+public class Workers {
   private final ExecutorService executorService;
 
   public Workers() {
     this.executorService = newVirtualThreadPerTaskExecutor();
   }
 
-  @Override
-  public List<T> apply(List<Callable<T>> callables) {
+  @SneakyThrows
+  public List<Void> invokeAll(List<Callable<Void>> callables) {
     var parentThread = currentThread();
     callables =
         callables.stream()
             .map(
                 c ->
-                    (Callable<T>)
+                    (Callable<Void>)
                         () -> {
                           renameThread(
                               parentThread, getRandomSubThreadNamePrefixFrom(parentThread));
                           return c.call();
                         })
             .toList();
-    List<Future<T>> futures;
-    try {
-      futures = executorService.invokeAll(callables);
-    } catch (InterruptedException e) {
-      throw new RuntimeException(e);
-    }
+    List<Future<Void>> futures = executorService.invokeAll(callables);
     return futures.stream().map(this::handleFutureException).toList();
   }
 
-  private T handleFutureException(Future<T> future) {
+  private Void handleFutureException(Future<Void> future) {
     try {
       return future.get();
     } catch (InterruptedException | ExecutionException e) {

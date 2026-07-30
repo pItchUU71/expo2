@@ -1,0 +1,50 @@
+package school.hei.asa.repository.mapper;
+
+import java.util.List;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+import school.hei.asa.model.Worker;
+import school.hei.asa.repository.model.JMissionExecution;
+import school.hei.asa.repository.model.JWorker;
+
+@AllArgsConstructor
+@Component
+public class WorkerMapper {
+
+  public Worker toDomain(JWorker jWorker) {
+    return toDomain(jWorker, new Cache());
+  }
+
+  /*package-private*/ Worker toDomain(JWorker jWorker, Cache cache) {
+    var code = jWorker.getCode();
+    if (cache.contains(Worker.class, code)) {
+      return cache.get(Worker.class, code);
+    }
+
+    var worker =
+        new Worker(
+            code,
+            jWorker.getName(),
+            jWorker.getEmail(),
+            jWorker.getFullname(),
+            jWorker.getAddress(),
+            jWorker.getCity(),
+            jWorker.getNif(),
+            jWorker.getStat());
+    cache.put(code, worker, Worker.class);
+
+    return worker;
+  }
+
+  JWorker toEntity(Worker worker, List<JMissionExecution> jmeList) {
+    var jWorker = new JWorker();
+    jWorker.setCode(worker.code());
+    jWorker.setName(worker.name());
+    jWorker.setMissionExecutions(jmeList);
+    return jWorker;
+  }
+
+  public JWorker toEntity(Worker worker) {
+    return toEntity(worker, List.of());
+  }
+}

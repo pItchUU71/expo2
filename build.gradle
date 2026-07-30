@@ -10,7 +10,7 @@ plugins {
 
     id 'jacoco'
 
-    
+
 }
 
 jacoco {
@@ -58,7 +58,7 @@ jacocoTestCoverageVerification {
         rule {
             limit {
                 counter = "LINE"
-                minimum = 0
+                minimum = 0.8
             }
         }
     }
@@ -110,8 +110,10 @@ jacocoTestReport {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:3.2.2'
-    testImplementation 'org.testcontainers:testcontainers:2.0.2'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.2'
+    implementation 'org.springframework.boot:spring-boot-starter-security:3.2.2'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.2.2'
+    testImplementation 'org.testcontainers:testcontainers:2.0.2'
     implementation 'org.flywaydb:flyway-core:9.22.3'
     testImplementation 'org.testcontainers:testcontainers-postgresql:2.0.2'
     implementation 'org.postgresql:postgresql:42.6.0'
@@ -152,6 +154,16 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.2'
     testImplementation 'org.testcontainers:testcontainers-junit-jupiter:2.0.2'
     testImplementation 'org.junit-pioneer:junit-pioneer:2.2.0'
+
+    implementation 'io.sentry:sentry-logback:7.6.0'
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.4.0'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    implementation 'org.xhtmlrenderer:flying-saucer-pdf:9.1.22'
+    implementation 'ognl:ognl:3.2.21'
+    implementation 'org.apache.pdfbox:pdfbox:2.0.30'
+    implementation 'com.ibm.icu:icu4j:77.1'
+    testImplementation 'com.tngtech.archunit:archunit-junit5:1.4.1'
 
 
 

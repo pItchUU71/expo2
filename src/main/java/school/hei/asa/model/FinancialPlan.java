@@ -1,0 +1,95 @@
+package school.hei.asa.model;
+
+import static java.time.LocalDate.now;
+import static java.time.Month.APRIL;
+import static java.time.Month.AUGUST;
+import static java.time.Month.DECEMBER;
+import static java.time.Month.FEBRUARY;
+import static java.time.Month.JANUARY;
+import static java.time.Month.JULY;
+import static java.time.Month.JUNE;
+import static java.time.Month.MARCH;
+import static java.time.Month.MAY;
+import static java.time.Month.NOVEMBER;
+import static java.time.Month.OCTOBER;
+import static java.time.Month.SEPTEMBER;
+import static java.util.stream.Collectors.joining;
+
+import gen.patrimoine.modele.Argent;
+import java.time.Month;
+import java.util.HashMap;
+import java.util.Map;
+import school.hei.asa.model.contract.Contract;
+
+public record FinancialPlan(
+    Map<Month, Argent> plannedCost,
+    Map<Month, Argent> executedCost,
+    Map<Contract, Exception> koContracts) {
+
+  @Override
+  public String toString() {
+    var diff = getDifferenceFromPlanned();
+    return String.format(
+        """
+        plannedCost = [ jan: %s, feb: %s, mar: %s, apr: %s, may: %s, jun: %s, jul: %s, aug: %s, sep: %s, oct: %s, nov: %s, dec: %s ],
+        executedCost = [ jan: %s, feb: %s, mar: %s, apr: %s, may: %s, jun: %s, jul: %s, aug: %s, sep: %s, oct: %s, nov: %s, dec: %s ] ,
+        differenceFromPlanned = [ jan: %s, feb: %s, mar: %s, apr: %s, may: %s, jun: %s, jul: %s, aug: %s, sep: %s, oct: %s, nov: %s, dec: %s ] ,
+        koContracts = %s
+""",
+        plannedCost.get(JANUARY).ppMontant(),
+        plannedCost.get(FEBRUARY).ppMontant(),
+        plannedCost.get(MARCH).ppMontant(),
+        plannedCost.get(APRIL).ppMontant(),
+        plannedCost.get(MAY).ppMontant(),
+        plannedCost.get(JUNE).ppMontant(),
+        plannedCost.get(JULY).ppMontant(),
+        plannedCost.get(AUGUST).ppMontant(),
+        plannedCost.get(SEPTEMBER).ppMontant(),
+        plannedCost.get(OCTOBER).ppMontant(),
+        plannedCost.get(NOVEMBER).ppMontant(),
+        plannedCost.get(DECEMBER).ppMontant(),
+        executedCost.get(JANUARY).ppMontant(),
+        executedCost.get(FEBRUARY).ppMontant(),
+        executedCost.get(MARCH).ppMontant(),
+        executedCost.get(APRIL).ppMontant(),
+        executedCost.get(MAY).ppMontant(),
+        executedCost.get(JUNE).ppMontant(),
+        executedCost.get(JULY).ppMontant(),
+        executedCost.get(AUGUST).ppMontant(),
+        executedCost.get(SEPTEMBER).ppMontant(),
+        executedCost.get(OCTOBER).ppMontant(),
+        executedCost.get(NOVEMBER).ppMontant(),
+        executedCost.get(DECEMBER).ppMontant(),
+        diff.get(JANUARY).ppMontant(),
+        diff.get(FEBRUARY).ppMontant(),
+        diff.get(MARCH).ppMontant(),
+        diff.get(APRIL).ppMontant(),
+        diff.get(MAY).ppMontant(),
+        diff.get(JUNE).ppMontant(),
+        diff.get(JULY).ppMontant(),
+        diff.get(AUGUST).ppMontant(),
+        diff.get(SEPTEMBER).ppMontant(),
+        diff.get(OCTOBER).ppMontant(),
+        diff.get(NOVEMBER).ppMontant(),
+        diff.get(DECEMBER).ppMontant(),
+        pp(koContracts));
+  }
+
+  private String pp(Map<Contract, Exception> koContracts) {
+    return koContracts.keySet().stream()
+        .map(
+            c ->
+                String.format(
+                    "[%s,%s] %s",
+                    c.worker().name(), c.entranceInstant(), koContracts.get(c).getMessage()))
+        .collect(joining(", "));
+  }
+
+  public Map<Month, Argent> getDifferenceFromPlanned() {
+    var mapOfDiff = new HashMap<Month, Argent>();
+    for (Month month : Month.values()) {
+      mapOfDiff.put(month, plannedCost.get(month).minus(executedCost.get(month), now()));
+    }
+    return mapOfDiff;
+  }
+}
