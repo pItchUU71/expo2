@@ -1,6 +1,5 @@
 package school.hei.asa.endpoint.rest.controller;
 
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -65,7 +64,8 @@ public class DailyExecutionController {
   }
 
   @ExceptionHandler(ContractExhaustedException.class)
-  public String handleContractExhausted(ContractExhaustedException e, RedirectAttributes redirectAttributes) {
+  public String handleContractExhausted(
+      ContractExhaustedException e, RedirectAttributes redirectAttributes) {
     redirectAttributes.addFlashAttribute("error", e.getMessage());
     return "redirect:/daily-execution";
   }
