@@ -50,15 +50,7 @@ public class WorkerServiceIT extends FacadeIT {
         new Worker(
             "worker-code", "code", "email", "full code", "address", "random city", "nif", "stat");
     var worker3 =
-        new Worker(
-            "alert-test-worker",
-            "name",
-            "email",
-            "full",
-            "addr",
-            "city",
-            "nif",
-            "stat");
+        new Worker("alert-test-worker", "name", "email", "full", "addr", "city", "nif", "stat");
     return List.of(worker, worker2, worker3);
   }
 
@@ -69,25 +61,9 @@ public class WorkerServiceIT extends FacadeIT {
         new Worker(
             "worker-code", "code", "email", "full code", "address", "random city", "nif", "stat");
     var worker4 =
-        new Worker(
-            "exhausted-test-worker",
-            "name",
-            "email",
-            "full",
-            "addr",
-            "city",
-            "nif",
-            "stat");
+        new Worker("exhausted-test-worker", "name", "email", "full", "addr", "city", "nif", "stat");
     var worker5 =
-        new Worker(
-            "alert-test-worker",
-            "name",
-            "email",
-            "full",
-            "addr",
-            "city",
-            "nif",
-            "stat");
+        new Worker("alert-test-worker", "name", "email", "full", "addr", "city", "nif", "stat");
     return List.of(worker1, worker2, worker3, worker4, worker5);
   }
 }
