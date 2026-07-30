@@ -227,7 +227,9 @@ class DailyExecutionControllerIT extends FacadeIT {
 
     assertThrows(
         ContractExhaustedException.class,
-        () -> dailyExecutionController.createDailyExecution(authentication, dmeForm, redirectAttributes));
+        () ->
+            dailyExecutionController.createDailyExecution(
+                authentication, dmeForm, redirectAttributes));
   }
 
   @Test

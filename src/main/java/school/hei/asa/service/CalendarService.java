@@ -74,5 +74,4 @@ public class CalendarService {
                 careProductCodeSupplier.get(), paidCareMissionCodesSupplier.get()))
         .lateReportedDaysByMonth();
   }
-
 }

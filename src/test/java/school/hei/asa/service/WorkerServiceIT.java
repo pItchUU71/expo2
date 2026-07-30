@@ -46,13 +46,48 @@ public class WorkerServiceIT extends FacadeIT {
 
   private List<Worker> workersFromYear() {
     var worker = new Worker("W-P-2024-01", "Lita Andria", null, null, null, null, null, null);
-    return List.of(worker);
+    var worker2 =
+        new Worker(
+            "worker-code", "code", "email", "full code", "address", "random city", "nif", "stat");
+    var worker3 =
+        new Worker(
+            "alert-test-worker",
+            "name",
+            "email",
+            "full",
+            "addr",
+            "city",
+            "nif",
+            "stat");
+    return List.of(worker, worker2, worker3);
   }
 
   private List<Worker> workersFromDateRange() {
     var worker1 = new Worker("W-101", "John", null, null, null, null, null, null);
     var worker2 = new Worker("W-P-2024-01", "Lita Andria", null, null, null, null, null, null);
-
-    return List.of(worker1, worker2);
+    var worker3 =
+        new Worker(
+            "worker-code", "code", "email", "full code", "address", "random city", "nif", "stat");
+    var worker4 =
+        new Worker(
+            "exhausted-test-worker",
+            "name",
+            "email",
+            "full",
+            "addr",
+            "city",
+            "nif",
+            "stat");
+    var worker5 =
+        new Worker(
+            "alert-test-worker",
+            "name",
+            "email",
+            "full",
+            "addr",
+            "city",
+            "nif",
+            "stat");
+    return List.of(worker1, worker2, worker3, worker4, worker5);
   }
 }
